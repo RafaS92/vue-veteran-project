@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, defineAsyncComponent, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import LoadingState from '../components/LoadingState.vue'
+import PageHeader from '../components/PageHeader.vue'
 import { useNotifications } from '../composables/useNotifications'
 import { useVeteranStore } from '../stores/veteran'
 const BenefitDetailsPanel = defineAsyncComponent(
@@ -21,19 +23,15 @@ function toggleSaved() {
 <template>
   <div v-if="benefit">
     <RouterLink class="back-link" to="/benefits">← Back to benefits</RouterLink>
-    <div class="page-heading">
-      <div>
-        <span class="eyebrow">Fictional benefit</span>
-        <h1>{{ benefit.title }}</h1>
-        <p>{{ benefit.summary }}</p>
-      </div>
-      <button class="button button-secondary" type="button" @click="toggleSaved">
-        {{ benefit.saved ? 'Remove saved benefit' : 'Save benefit' }}
-      </button>
-    </div>
+    <PageHeader eyebrow="Fictional benefit" :title="benefit.title" :description="benefit.summary">
+      <template #actions>
+        <button class="button button-secondary" type="button" @click="toggleSaved">
+          {{ benefit.saved ? 'Remove saved benefit' : 'Save benefit' }}
+        </button>
+      </template>
+    </PageHeader>
     <Suspense
-      ><BenefitDetailsPanel :benefit="benefit" /><template #fallback
-        ><div class="loading-state"><div class="spinner" /></div></template
+      ><BenefitDetailsPanel :benefit="benefit" /><template #fallback><LoadingState /></template
     ></Suspense>
     <p class="legal-note">
       <strong>Educational notice:</strong> This content is fictional and does not determine

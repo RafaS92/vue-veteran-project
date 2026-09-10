@@ -6,6 +6,8 @@ import BaseModal from '../components/BaseModal.vue'
 import BaseSelect from '../components/BaseSelect.vue'
 import BenefitCard from '../components/BenefitCard.vue'
 import EmptyState from '../components/EmptyState.vue'
+import LoadingState from '../components/LoadingState.vue'
+import PageHeader from '../components/PageHeader.vue'
 import { useBenefits } from '../composables/useBenefits'
 import { useNotifications } from '../composables/useNotifications'
 import { useVeteranStore } from '../stores/veteran'
@@ -49,22 +51,20 @@ function saveBenefit(id: string) {
 </script>
 <template>
   <div>
-    <div class="page-heading">
-      <div>
-        <span class="eyebrow">Resource library</span>
-        <h1>Explore benefits</h1>
-        <p>
-          Browse fictional programs, review application progress, and save the resources you want to
-          revisit.
-        </p>
-      </div>
-      <div class="heading-actions">
-        <span class="result-count">{{ filteredBenefits.length }} results</span
-        ><button class="text-button" type="button" @click="isAboutOpen = true">
-          About this data
-        </button>
-      </div>
-    </div>
+    <PageHeader
+      eyebrow="Resource library"
+      title="Explore benefits"
+      description="Browse fictional programs, review application progress, and save the resources you want to revisit."
+    >
+      <template #actions>
+        <div class="heading-actions">
+          <span class="result-count">{{ filteredBenefits.length }} results</span
+          ><button class="text-button" type="button" @click="isAboutOpen = true">
+            About this data
+          </button>
+        </div>
+      </template>
+    </PageHeader>
     <section class="filters" aria-label="Benefit filters">
       <BaseInput
         id="search"
@@ -88,7 +88,7 @@ function saveBenefit(id: string) {
         eligibility decisions.
       </p>
     </BaseModal>
-    <div v-if="isLoading" class="loading-state"><div class="spinner" /></div>
+    <LoadingState v-if="isLoading" />
     <section v-else class="benefits-grid">
       <BenefitCard
         v-for="benefit in filteredBenefits"

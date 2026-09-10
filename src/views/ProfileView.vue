@@ -4,6 +4,8 @@ import { storeToRefs } from 'pinia'
 import BaseCard from '../components/BaseCard.vue'
 import BaseInput from '../components/BaseInput.vue'
 import BaseSelect from '../components/BaseSelect.vue'
+import LoadingState from '../components/LoadingState.vue'
+import PageHeader from '../components/PageHeader.vue'
 import { useNotifications } from '../composables/useNotifications'
 import { useProfileForm } from '../composables/useProfileForm'
 import { useVeteranStore } from '../stores/veteran'
@@ -31,17 +33,12 @@ function save() {
 </script>
 <template>
   <div>
-    <div class="page-heading">
-      <div>
-        <span class="eyebrow">Account details</span>
-        <h1>Your profile</h1>
-        <p>
-          Keep the fictional service and contact information used throughout this learning project
-          up to date.
-        </p>
-      </div>
-    </div>
-    <div v-if="isLoading" class="loading-state"><div class="spinner" /></div>
+    <PageHeader
+      eyebrow="Account details"
+      title="Your profile"
+      description="Keep the fictional service and contact information used throughout this learning project up to date."
+    />
+    <LoadingState v-if="isLoading" />
     <form v-else-if="formState" class="profile-layout" @submit.prevent="save">
       <BaseCard elevated>
         <template #header

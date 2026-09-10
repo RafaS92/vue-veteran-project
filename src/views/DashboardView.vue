@@ -4,6 +4,9 @@ import { storeToRefs } from 'pinia'
 import { RouterLink } from 'vue-router'
 import ActionItem from '../components/ActionItem.vue'
 import BaseCard from '../components/BaseCard.vue'
+import PageHeader from '../components/PageHeader.vue'
+import ProgressBar from '../components/ProgressBar.vue'
+import LoadingState from '../components/LoadingState.vue'
 import StatusBadge from '../components/StatusBadge.vue'
 import { useNotifications } from '../composables/useNotifications'
 import { useVeteranStore } from '../stores/veteran'
@@ -26,24 +29,17 @@ function toggleAction(id: string) {
 </script>
 <template>
   <div>
-    <div class="page-heading">
-      <div>
-        <span class="eyebrow">Thursday, September 10</span>
-        <h1>Good morning, {{ firstName }}.</h1>
-        <p>
-          Here is a clear view of your fictional benefit activity and the next steps that need
-          attention.
-        </p>
-      </div>
-      <RouterLink class="button button-secondary" to="/benefits">Explore benefits</RouterLink>
-    </div>
+    <PageHeader
+      eyebrow="Thursday, September 10"
+      :title="`Good morning, ${firstName}.`"
+      description="Here is a clear view of your fictional benefit activity and the next steps that need attention."
+    >
+      <template #actions>
+        <RouterLink class="button button-secondary" to="/benefits">Explore benefits</RouterLink>
+      </template>
+    </PageHeader>
 
-    <div v-if="isLoading" class="loading-state">
-      <div>
-        <div class="spinner" />
-        <p>Preparing your dashboard…</p>
-      </div>
-    </div>
+    <LoadingState v-if="isLoading" message="Preparing your dashboard…" />
     <p v-else-if="error" class="error-text" role="alert">{{ error }}</p>
     <template v-else-if="veteran">
       <section class="summary-grid" aria-label="Benefit summary">
@@ -62,9 +58,13 @@ function toggleAction(id: string) {
         <BaseCard class="progress-card"
           ><span class="stat-label">Actions completed</span
           ><strong class="stat-value">{{ store.completionPercentage }}%</strong>
-          <div class="progress-track">
-            <span :style="{ width: `${store.completionPercentage}%` }" /></div
-        ></BaseCard>
+          <ProgressBar
+            :value="store.completionPercentage"
+            tone="gold"
+            thick
+            aria-label="Actions completed"
+          />
+        </BaseCard>
       </section>
 
       <section class="dashboard-grid">
@@ -162,17 +162,8 @@ function toggleAction(id: string) {
 .summary-grid small {
   color: var(--muted);
 }
-.progress-track {
-  height: 7px;
+.progress-card :deep(.progress-track) {
   margin-top: 0.8rem;
-  overflow: hidden;
-  border-radius: 999px;
-  background: #e5ebe7;
-}
-.progress-track span {
-  display: block;
-  height: 100%;
-  background: var(--gold);
 }
 .dashboard-grid {
   display: grid;

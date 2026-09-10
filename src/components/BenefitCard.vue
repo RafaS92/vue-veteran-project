@@ -2,6 +2,7 @@
 import { RouterLink } from 'vue-router'
 import type { Benefit } from '../types'
 import BaseCard from './BaseCard.vue'
+import ProgressBar from './ProgressBar.vue'
 import StatusBadge from './StatusBadge.vue'
 defineProps<{ benefit: Benefit }>()
 defineEmits<{ save: [id: string] }>()
@@ -17,9 +18,7 @@ defineEmits<{ save: [id: string] }>()
     <div class="progress-row">
       <span>Application progress</span><strong>{{ benefit.progress }}%</strong>
     </div>
-    <div class="progress-track" aria-hidden="true">
-      <span :style="{ width: `${benefit.progress}%` }" />
-    </div>
+    <ProgressBar :value="benefit.progress" aria-label="Application progress" />
     <footer>
       <RouterLink class="details-link" :to="`/benefits/${benefit.id}`">View details</RouterLink>
       <button
@@ -58,18 +57,8 @@ p {
 .progress-row strong {
   color: var(--ink);
 }
-.progress-track {
-  height: 6px;
+.benefit-card :deep(.progress-track) {
   margin-top: 0.5rem;
-  border-radius: 999px;
-  overflow: hidden;
-  background: #e8ece9;
-}
-.progress-track span {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: var(--green);
 }
 footer {
   display: flex;
