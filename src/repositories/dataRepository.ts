@@ -7,5 +7,9 @@ const delay = (milliseconds: number) => new Promise((resolve) => setTimeout(reso
 
 export async function fetchDashboardData(): Promise<DashboardData> {
   await delay(450)
-  return structuredClone({ veteran: veteranFixture, benefits: benefitsFixture, actionItems: actionItemsFixture }) as DashboardData
+  return structuredClone({
+    veteran: veteranFixture,
+    benefits: benefitsFixture,
+    actionItems: actionItemsFixture,
+  }) as DashboardData
 }

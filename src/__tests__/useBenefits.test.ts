@@ -4,8 +4,28 @@ import { useBenefits } from '../composables/useBenefits'
 import type { Benefit } from '../types'
 
 const benefits: Benefit[] = [
-  { id: 'one', title: 'Education Support', category: 'Education', summary: 'Training help', description: '', status: 'applied', progress: 50, nextStep: '', saved: false },
-  { id: 'two', title: 'Health Enrollment', category: 'Health', summary: 'Care access', description: '', status: 'approved', progress: 100, nextStep: '', saved: true },
+  {
+    id: 'one',
+    title: 'Education Support',
+    category: 'Education',
+    summary: 'Training help',
+    description: '',
+    status: 'applied',
+    progress: 50,
+    nextStep: '',
+    saved: false,
+  },
+  {
+    id: 'two',
+    title: 'Health Enrollment',
+    category: 'Health',
+    summary: 'Care access',
+    description: '',
+    status: 'approved',
+    progress: 100,
+    nextStep: '',
+    saved: true,
+  },
 ]
 
 describe('useBenefits', () => {

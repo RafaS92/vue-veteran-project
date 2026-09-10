@@ -40,4 +40,5 @@ npm run build
 - `src/__tests__`: focused learning-oriented test suite
 
 This application is educational and is not affiliated with or endorsed by any government agency.
+
 # vue-veteran-project

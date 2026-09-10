@@ -13,12 +13,19 @@ interface VeteranState {
 }
 
 function readSession(): boolean {
-  return typeof localStorage !== 'undefined' && localStorage.getItem('service-compass-session') === 'active'
+  return (
+    typeof localStorage !== 'undefined' &&
+    localStorage.getItem('service-compass-session') === 'active'
+  )
 }
 
 function readStoredIds(key: string): string[] {
   if (typeof localStorage === 'undefined') return []
-  try { return JSON.parse(localStorage.getItem(key) ?? '[]') as string[] } catch { return [] }
+  try {
+    return JSON.parse(localStorage.getItem(key) ?? '[]') as string[]
+  } catch {
+    return []
+  }
 }
 
 export const useVeteranStore = defineStore('veteran', {
@@ -65,8 +72,14 @@ export const useVeteranStore = defineStore('veteran', {
         this.actionItems = data.actionItems
         const savedIds = readStoredIds('service-compass-saved-benefits')
         const completedIds = readStoredIds('service-compass-completed-actions')
-        if (savedIds.length) this.benefits.forEach((benefit) => { benefit.saved = savedIds.includes(benefit.id) })
-        if (completedIds.length) this.actionItems.forEach((action) => { action.completed = completedIds.includes(action.id) })
+        if (savedIds.length)
+          this.benefits.forEach((benefit) => {
+            benefit.saved = savedIds.includes(benefit.id)
+          })
+        if (completedIds.length)
+          this.actionItems.forEach((action) => {
+            action.completed = completedIds.includes(action.id)
+          })
         this.hasLoaded = true
       } catch {
         this.error = 'We could not load the demonstration data. Please try again.'
@@ -77,12 +90,18 @@ export const useVeteranStore = defineStore('veteran', {
     toggleSaved(id: string) {
       const benefit = this.benefits.find((item) => item.id === id)
       if (benefit) benefit.saved = !benefit.saved
-      localStorage.setItem('service-compass-saved-benefits', JSON.stringify(this.benefits.filter((item) => item.saved).map((item) => item.id)))
+      localStorage.setItem(
+        'service-compass-saved-benefits',
+        JSON.stringify(this.benefits.filter((item) => item.saved).map((item) => item.id)),
+      )
     },
     toggleAction(id: string) {
       const action = this.actionItems.find((item) => item.id === id)
       if (action) action.completed = !action.completed
-      localStorage.setItem('service-compass-completed-actions', JSON.stringify(this.actionItems.filter((item) => item.completed).map((item) => item.id)))
+      localStorage.setItem(
+        'service-compass-completed-actions',
+        JSON.stringify(this.actionItems.filter((item) => item.completed).map((item) => item.id)),
+      )
     },
     updateProfile(profile: Veteran) {
       this.veteran = { ...profile }
