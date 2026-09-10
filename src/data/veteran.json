@@ -1,0 +1,11 @@
+{
+  "id": "v-demo-001",
+  "name": "Jordan Brooks",
+  "email": "jordan.brooks@example.com",
+  "phone": "(555) 014-2048",
+  "branch": "U.S. Navy",
+  "servicePeriod": "2012–2020",
+  "dischargeStatus": "Honorable",
+  "location": "Austin, Texas",
+  "preferredContact": "Email"
+}

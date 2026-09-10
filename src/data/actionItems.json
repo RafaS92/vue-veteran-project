@@ -1,0 +1,6 @@
+[
+  { "id": "action-1", "title": "Upload enrollment verification", "benefitId": "education-support", "dueDate": "2026-09-24", "completed": false },
+  { "id": "action-2", "title": "Verify service history", "benefitId": "home-loan", "dueDate": "2026-09-18", "completed": false },
+  { "id": "action-3", "title": "Complete skills assessment", "benefitId": "skills-training", "dueDate": "2026-10-02", "completed": false },
+  { "id": "action-4", "title": "Review health care welcome guide", "benefitId": "health-enrollment", "dueDate": "2026-09-12", "completed": true }
+]
